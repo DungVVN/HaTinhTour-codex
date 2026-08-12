@@ -76,3 +76,5 @@ h2 em,
   :root { --muted: #4d5953; --line: #9ca9a1; }
   .hero-caption, .feature-label, .journey-overlay { text-shadow: 0 1px 4px #000; }
 }
+:root { --coral-ink: #a94f38; }
+.hero-actions .light-link { color: var(--ink); border-color: var(--ink); }
