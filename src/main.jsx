@@ -4,6 +4,7 @@ import { Badge, Button, Card, Col, Container, Form, Modal, Nav, Navbar, Row } fr
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import './motion.css';
+import './mobile-nav.css';
 
 const destinations = [
   { id: 'thien-cam', name: 'Biển Thiên Cầm', area: 'Cẩm Xuyên', type: 'Biển', image: '/bien-thien-cam-hoang-hon.jpg', text: 'Một cung biển cong mềm, nơi núi Hồng và mặt nước gặp nhau trong ánh chiều.' },
