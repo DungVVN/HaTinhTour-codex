@@ -1,8 +1,9 @@
-import { StrictMode, useMemo, useState } from 'react';
+import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Badge, Button, Card, Col, Container, Form, Modal, Nav, Navbar, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import './motion.css';
 
 const destinations = [
   { id: 'thien-cam', name: 'Biển Thiên Cầm', area: 'Cẩm Xuyên', type: 'Biển', image: '/bien-thien-cam-hoang-hon.jpg', text: 'Một cung biển cong mềm, nơi núi Hồng và mặt nước gặp nhau trong ánh chiều.' },
@@ -49,6 +50,18 @@ function DestinationCard({ item, onSelect }) { return <Card className="destinati
 
 function App() {
   const [query, setQuery] = useState(''); const [filter, setFilter] = useState('Tất cả'); const [selected, setSelected] = useState(null); const [shareOpen, setShareOpen] = useState(false); const [copied, setCopied] = useState(false); const [eventMode, setEventMode] = useState('list'); const [active, setActive] = useState('home');
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = document.querySelectorAll('.section-pad, .destination-card, .journey-card, .event-list article, .category-row');
+    targets.forEach((node, index) => { node.classList.add('motion-target'); node.style.setProperty('--motion-delay', `${Math.min(index * 45, 360)}ms`); });
+    if (reduceMotion) { targets.forEach(node => node.classList.add('is-visible')); return undefined; }
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(node => observer.observe(node));
+    const heroImage = document.querySelector('.hero-visual img');
+    const onScroll = () => { if (heroImage) heroImage.style.setProperty('--parallax-y', `${Math.min(window.scrollY * 0.08, 34)}px`); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    return () => { observer.disconnect(); window.removeEventListener('scroll', onScroll); };
+  }, []);
   const filtered = useMemo(() => destinations.filter((item) => (filter === 'Tất cả' || item.type === filter) && `${item.name} ${item.area} ${item.type}`.toLowerCase().includes(query.toLowerCase().trim())), [query, filter]);
   const select = (item) => setSelected(item); const copyLink = async () => { try { await navigator.clipboard.writeText(window.location.href); } catch {} setCopied(true); window.setTimeout(() => setCopied(false), 1800); };
   return <div className="site-shell"><Header active={active} setActive={setActive} /><main>
