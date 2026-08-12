@@ -7,6 +7,7 @@ import './motion.css';
 import './mobile-nav.css';
 import './spacing.css';
 import './responsive-layout.css';
+import './contrast.css';
 
 const destinations = [
   { id: 'thien-cam', name: 'Biển Thiên Cầm', area: 'Cẩm Xuyên', type: 'Biển', image: '/bien-thien-cam-hoang-hon.jpg', text: 'Một cung biển cong mềm, nơi núi Hồng và mặt nước gặp nhau trong ánh chiều.' },
