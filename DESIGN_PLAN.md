@@ -30,8 +30,8 @@ Không triển khai backend thật, database production, API, GPS, bản đồ t
   - Cam san hô: accent, trạng thái và điểm nhấn.
   - Nền trắng ngà: tạo cảm giác nhẹ, gần gũi với du lịch và thiên nhiên.
 - Typography:
-  - Heading: Manrope.
-  - Body: DM Sans.
+  - Heading: Lora, serif mềm và có chất editorial.
+  - Body: Plus Jakarta Sans, tròn, rõ và dễ đọc trên mobile.
 - Hệ thống hình dáng:
   - Card và ảnh dùng bo góc đồng nhất.
   - Button dạng pill.
