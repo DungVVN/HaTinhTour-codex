@@ -395,3 +395,46 @@ Motion intensity: 5/10, dùng để tạo hierarchy chứ không làm trang phô
 ## 12. Kết luận
 
 Lần triển khai tiếp theo chỉ bắt đầu sau khi kế hoạch này được duyệt. Thứ tự ưu tiên là: nội dung và dữ liệu → flow → screen states → visual system → prototype → validation. Không quay lại cách làm chỉ dựng hero, card và vài section tĩnh rồi gọi là hoàn chỉnh.
+# DESIGN RESET / V2 - Editorial travel journal
+
+> Cập nhật sau yêu cầu redesign toàn bộ ngày 2026-08-12. Bản V2 thay thế visual system trước đó; không tiếp tục vá layout cũ.
+
+## Art direction
+
+- Định vị: landing/editorial tourism experience cho luồng “Khám phá Hà Tĩnh → Sơn Trang”.
+- Cảm giác: tạp chí du hành miền Trung, chân thật, giàu ảnh, có nhịp và có khoảng thở.
+- Màu chủ đạo: deep sea green `#102c2b`, paper `#f5f4ef`, surface `#fffdf8`, coral `#ef765c`, sun `#f2c66d`.
+- Typography: Manrope cho display/headline, DM Sans cho body/UI; không dùng typography mặc định của Bootstrap.
+- Hình khối: card bo 20px, button pill, collage ảnh và layout bất đối xứng có chủ đích.
+- Motion: reveal khi vào viewport, hover zoom ảnh, hover arrow, hero drift; luôn có `prefers-reduced-motion`.
+
+## IA và trải nghiệm
+
+1. Hero: manifesto, điểm nhấn Thiên Cầm, CTA “Khám phá điểm đến”.
+2. Manifesto: câu định vị cảm xúc, tạo nhịp chuyển từ hero sang nội dung.
+3. Điểm đến: feature Chùa Hương Tích, tìm kiếm, filter theo chủ đề và 6 destination cards.
+4. Cảm hứng: 4 tuyến chủ đề dẫn ngược về điểm đến.
+5. Hành trình: 3 route cards có trạng thái mở modal chi tiết.
+6. Lịch mùa: list/calendar toggle, từng event row mở detail modal.
+7. Sơn Trang: CTA chuyển tiếp chính, full-bleed image.
+
+## Quy chuẩn responsive
+
+- Desktop: layout full-width theo gutter biến thiên, hero split/collage, destination 4 cột, journey 3 cột.
+- Tablet: nav chuyển thành menu panel, hero xếp dọc, destination 2 cột, journey 2 cột.
+- Mobile: gutter 16px, không có overflow ngang ngoài filter scroller, destination/route 1 cột, modal và touch target đủ lớn.
+- Không sử dụng `h-screen`; hero dùng `100svh`/min-height ổn định.
+- Mọi section dùng token spacing chung; không tự tạo padding riêng ngoài component rule.
+
+## Mock-data và ảnh
+
+- Không backend/API/DB thật; dữ liệu mock đặt trong `src/main.jsx`.
+- Asset local lấy từ `public/`, mapping nguồn duy trì trong `public/IMAGE_SOURCES.md`.
+- Mỗi destination/route/event detail phải có ảnh local hợp lệ, không dùng ảnh trùng nếu đã có asset phù hợp.
+
+## Kiểm thử bắt buộc
+
+- `npm test`
+- `npm run build`
+- `git diff --check`
+- Kiểm tra trực quan desktop, tablet và mobile trước khi deploy.

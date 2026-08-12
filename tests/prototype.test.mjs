@@ -8,7 +8,7 @@ const styles = await readFile(new URL('../src/styles.css', import.meta.url), 'ut
 test('prototype source keeps Vietnamese text readable', () => {
   assert.match(source, /Biển Thiên Cầm/);
   assert.match(source, /Khám phá điểm đến/);
-  assert.doesNotMatch(source, /Biá»|HÃ|Ä‘/);
+  assert.doesNotMatch(source, /BiÃ|HÃ|Ä‘/);
 });
 
 test('prototype contains all primary sections and responsive navigation', () => {
