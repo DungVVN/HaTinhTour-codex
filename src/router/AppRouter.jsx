@@ -10,8 +10,8 @@ function currentRoute() { return window.location.hash.replace(/^#\/?/, '').split
 
 export default function AppRouter() {
   const [route, setRoute] = useState(currentRoute); const [selected, setSelected] = useState(null);
-  useEffect(() => { const sync = () => { setRoute(currentRoute()); window.scrollTo({ top: 0, behavior: 'smooth' }); }; window.addEventListener('hashchange', sync); return () => window.removeEventListener('hashchange', sync); }, []);
+  useEffect(() => { const sync = () => { setRoute(currentRoute()); window.scrollTo(0, 0); }; window.addEventListener('hashchange', sync); return () => window.removeEventListener('hashchange', sync); }, []);
   const props = { onSelect: setSelected };
   const page = route === 'destinations' ? <DestinationsPage {...props} /> : route === 'journeys' ? <JourneysPage {...props} /> : route === 'events' ? <EventsPage {...props} /> : route === 'son-trang' ? <SonTrangPage /> : <HomePage {...props} />;
-  return <>{page}<DetailModal item={selected} onClose={() => setSelected(null)} /></>;
+  return <><div className="route-transition" key={route}>{page}</div><DetailModal item={selected} onClose={() => setSelected(null)} /></>;
 }
