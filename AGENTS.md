@@ -28,6 +28,7 @@ Ha Tinh Tour is a Vietnamese travel discovery prototype, designed in the spirit 
 - Horizontal gutters are intentionally compact: desktop `20–44px`, iPad `24–32px`, phone `16px`.
 - Desktop, iPad, and phone must be checked together after any redesign. The content should expand with the viewport while cards, text columns, and controls retain readable internal widths.
 - Use asymmetry inside the canvas for visual rhythm, not unused outer whitespace. Any new `max-width` must be justified for readability of a text block, never for the whole page shell.
+- Full-viewport does not mean forcing every section to fill the viewport height: use content-driven section heights with compact padding. Avoid `min-height: svh` on ordinary content sections because it creates empty bands above and below cards.
 - Do not change the full-viewport contract when redesigning a section; extend the shared tokens or breakpoint rules instead.
 
 ## Validation

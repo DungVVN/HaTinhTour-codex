@@ -14,8 +14,8 @@
   --space-12: 80px;
 
   /* Semantic spacing */
-  --space-section: clamp(64px, 8vw, 128px);
-  --space-section-mobile: 56px;
+  --space-section: clamp(48px, 5vw, 80px);
+  --space-section-mobile: 40px;
   --space-content: clamp(24px, 4vw, 56px);
   --space-grid: clamp(16px, 2vw, 28px);
   --space-card: clamp(16px, 2vw, 24px);
@@ -40,7 +40,7 @@ main { overflow: clip; }
 .section-heading > *, .search-header > * { min-width: 0; }
 .destination-layout, .destination-grid, .journey-grid { gap: var(--space-grid); }
 .destination-grid { row-gap: var(--space-grid); }
-.destination-card .card-body { min-height: 190px; padding: var(--space-card); }
+.destination-card .card-body { min-height: 0; padding: var(--space-card); }
 .destination-card .card-body p { margin-bottom: var(--space-6); }
 .category-list { margin-top: var(--space-5); }
 .category-row { min-height: 76px; padding-block: var(--space-6); }
@@ -55,11 +55,11 @@ main { overflow: clip; }
 /* iPad/tablet: preserve breathing room without wasting vertical space */
 @media (min-width: 768px) and (max-width: 991px) {
   :root { --layout-gutter: clamp(24px, 3.2vw, 32px); }
-  .section-pad { padding-block: 72px; }
+  .section-pad { padding-block: 56px; }
   .hero { padding-block: 64px 88px; }
   .destination-layout { gap: 20px; }
   .destination-grid { row-gap: 20px; }
-  .destination-card .card-body { min-height: 205px; }
+  .destination-card .card-body { min-height: 0; }
   .journey-grid { gap: 16px; }
   .event-list article { min-height: 96px; }
 }
