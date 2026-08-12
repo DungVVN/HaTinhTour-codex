@@ -84,7 +84,7 @@ em { color:var(--clay); font-style:normal; }
 .events-section { background:#eee9de; }
 .view-switch { display:flex; gap:4px; padding:4px; border:1px solid var(--line); border-radius:999px; }
 .event-list { border-top:1px solid var(--line); }
-.event-list article { display:grid; grid-template-columns:90px 1fr 30px; gap:20px; align-items:center; padding:22px 0; border-bottom:1px solid var(--line); }
+.event-list article { display:grid; grid-template-columns:90px 1fr 30px; gap:20px; align-items:center; padding:22px 0; border-bottom:1px solid var(--line); cursor:pointer; }
 .event-list article > strong { font:700 34px/1 Lora,Georgia,serif; }
 .event-list article > strong small { display:block; margin-top:5px; color:var(--clay); font:700 10px 'Plus Jakarta Sans',sans-serif; letter-spacing:.12em; }
 .event-list article span { color:var(--clay); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; }
