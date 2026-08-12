@@ -1,5 +1,17 @@
 # Kế hoạch thiết kế và triển khai
 
+## 0. Quyết định redesign mới
+
+Bản hiện tại được thay thế bằng một hướng thiết kế mới, không tiếp tục vá layout cũ.
+
+- Design read: prototype du lịch/editorial cho người khám phá Hà Tĩnh, theo ngôn ngữ **coastal field journal**: tự nhiên, có chiều sâu hình ảnh, nhẹ và giàu không khí địa phương.
+- Màu chính mới: xanh đá biển `#173638`, xanh tràm `#2f625a`, nền vỏ sò `#f4f0e7`, xanh sương `#dcebe4`, đất nung `#c86b4d`, vàng nắng `#e5b66a`.
+- Không dùng nền đen phủ lên ảnh hero. Ảnh được trình bày sáng, có caption riêng trên nền tương phản.
+- Bố cục mới dùng các khối full-width, grid bất đối xứng nhẹ, feature image lớn, card ngang trên mobile và section chiều cao theo nội dung.
+- Desktop, iPad và điện thoại dùng chung một trục gutter; không có wrapper hẹp làm phát sinh khoảng rỗng hai bên.
+- Motion chỉ phục vụ hierarchy, hover và chuyển trạng thái filter/modal; luôn có `prefers-reduced-motion`.
+- Giữ mock database, ảnh trong `public`, nhãn tiếng Việt và các anchor hiện có; không thêm backend/API.
+
 ## 1. Mục tiêu
 
 Xây dựng một prototype tương tác theo tinh thần dự án Figma cho luồng **Khám phá Hà Tĩnh → Sơn Trang**, sử dụng mock database data và hình ảnh trong thư mục `public`.
@@ -174,7 +186,7 @@ Nguồn ảnh đã tải được ghi trong [public/IMAGE_SOURCES.md](public/IMA
 ### Quy tắc canvas toàn màn hình
 
 - Toàn bộ prototype dùng full viewport ở desktop, iPad và điện thoại; không bọc nội dung trong một khung `max-width` chung làm phát sinh khoảng rỗng lớn hai bên.
-- Căn lề ngang dùng token `--layout-gutter` trong `src/spacing.css`: desktop `20–44px`, iPad `24–32px`, mobile `16px`.
+- Căn lề ngang dùng token `--gutter` trong `src/styles.css`, co giãn theo viewport và giảm còn `16px` trên mobile.
 - Section full-bleed dùng `width: 100vw`; nội dung bên trong vẫn bám cùng gutter chung để các phần thẳng hàng.
 - Chỉ giới hạn `max-width` cho đoạn văn, tiêu đề hoặc control cần dễ đọc; không giới hạn toàn bộ page shell.
 - Full màn hình được hiểu là phủ đủ chiều ngang, không phải ép mọi section cao bằng viewport. Các section nội dung dùng chiều cao theo nội dung; chỉ hero được phép giữ chiều cao lớn để tạo điểm nhấn.

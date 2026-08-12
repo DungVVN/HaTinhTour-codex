@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const source = await readFile(new URL('../src/main.jsx', import.meta.url), 'utf8');
-const styles = await Promise.all(['styles.css', 'spacing.css', 'responsive-layout.css', 'mobile-nav.css', 'contrast.css'].map(file => readFile(new URL(`../src/${file}`, import.meta.url), 'utf8'))).then(files => files.join('\n'));
+const styles = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 test('prototype source keeps Vietnamese text readable', () => {
   assert.match(source, /Biển Thiên Cầm/);
@@ -15,7 +15,8 @@ test('prototype contains all primary sections and responsive navigation', () => 
   for (const section of ['destinations', 'search', 'journeys', 'events', 'son-trang']) assert.match(source, new RegExp(`id="${section}"`));
   assert.match(source, /mobile-nav/);
   assert.match(styles, /@media\s*\(max-width:\s*767px\)/);
-  assert.match(styles, /@media\s*\(min-width:\s*768px\)/);
+  assert.match(styles, /@media\s*\(max-width:\s*991px\)/);
+  assert.match(styles, /--gutter/);
 });
 
 test('internal navigation targets existing sections', () => {

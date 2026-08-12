@@ -24,7 +24,7 @@ Ha Tinh Tour is a Vietnamese travel discovery prototype, designed in the spirit 
 ### Full-viewport layout rule
 
 - The website is a full-canvas prototype: primary sections must use `width: 100%`/`100vw` where appropriate and must not introduce a narrow centered `max-width` wrapper by default.
-- All page-level content aligns to the shared `--layout-gutter` token in `src/spacing.css`; do not add one-off left/right margins that create large empty side zones.
+- All page-level content aligns to the shared `--gutter` token in `src/styles.css`; do not add one-off left/right margins that create large empty side zones.
 - Horizontal gutters are intentionally compact: desktop `20–44px`, iPad `24–32px`, phone `16px`.
 - Desktop, iPad, and phone must be checked together after any redesign. The content should expand with the viewport while cards, text columns, and controls retain readable internal widths.
 - Use asymmetry inside the canvas for visual rhythm, not unused outer whitespace. Any new `max-width` must be justified for readability of a text block, never for the whole page shell.
