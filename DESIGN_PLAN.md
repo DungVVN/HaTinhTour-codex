@@ -1,236 +1,397 @@
-# Kế hoạch thiết kế và triển khai
+# Kế hoạch thiết kế hoàn chỉnh
 
-## 0. Quyết định redesign mới
+## Khám phá Hà Tĩnh → Sơn Trang
 
-Bản hiện tại được thay thế bằng một hướng thiết kế mới, không tiếp tục vá layout cũ.
+> Đây là tài liệu nguồn cho thiết kế UI/UX và prototype. Chưa code trong giai đoạn lập kế hoạch này.
 
-- Design read: prototype du lịch/editorial cho người khám phá Hà Tĩnh, theo ngôn ngữ **coastal field journal**: tự nhiên, có chiều sâu hình ảnh, nhẹ và giàu không khí địa phương.
-- Màu chính mới: xanh đá biển `#173638`, xanh tràm `#2f625a`, nền vỏ sò `#f4f0e7`, xanh sương `#dcebe4`, đất nung `#c86b4d`, vàng nắng `#e5b66a`.
-- Không dùng nền đen phủ lên ảnh hero. Ảnh được trình bày sáng, có caption riêng trên nền tương phản.
-- Bố cục mới dùng các khối full-width, grid bất đối xứng nhẹ, feature image lớn, card ngang trên mobile và section chiều cao theo nội dung.
-- Desktop, iPad và điện thoại dùng chung một trục gutter; không có wrapper hẹp làm phát sinh khoảng rỗng hai bên.
-- Motion chỉ phục vụ hierarchy, hover và chuyển trạng thái filter/modal; luôn có `prefers-reduced-motion`.
-- Giữ mock database, ảnh trong `public`, nhãn tiếng Việt và các anchor hiện có; không thêm backend/API.
+## 1. Định hướng sản phẩm
 
-## 1. Mục tiêu
+### Design read
 
-Xây dựng một prototype tương tác theo tinh thần dự án Figma cho luồng **Khám phá Hà Tĩnh → Sơn Trang**, sử dụng mock database data và hình ảnh trong thư mục `public`.
+Đây là một nền tảng khám phá điểm đến theo tinh thần **editorial travel journal**, không phải landing page quảng cáo đơn giản. Người dùng phải có cảm giác đang mở một cuốn nhật ký về Hà Tĩnh: nhìn thấy cảnh quan, đọc được câu chuyện, chọn được trải nghiệm và hình dung được chuyến đi tiếp theo.
 
-Đây không phải một dự án backend và cũng không hoàn toàn định vị là một sản phẩm frontend. React/Vite chỉ là phương tiện dựng prototype có thể chạy được, nhằm mô phỏng màn hình, dữ liệu, trạng thái và các luồng trải nghiệm.
+### Mục tiêu trải nghiệm
 
-Không triển khai backend thật, database production, API, GPS, bản đồ thật, tìm kiếm thật hoặc filter thật.
+1. Gây cảm hứng bằng hình ảnh và câu chuyện địa phương.
+2. Giúp người dùng tìm đúng điểm đến theo nhu cầu.
+3. Cho phép đi từ nội dung tổng quan đến chi tiết, bản đồ, hành trình và sự kiện.
+4. Chuyển tiếp tự nhiên từ khám phá Hà Tĩnh sang Sơn Trang.
+5. Tạo cấu trúc nội dung đủ rõ để sau này nối FE, BE, DB, CMS và API thật.
 
-## 2. Hướng thiết kế
+### Không làm trong prototype
 
-- Phong cách: editorial travel, giàu hình ảnh và có cảm giác khám phá.
-- Đối tượng: khách du lịch, nhóm gia đình, nhóm bạn và người muốn tìm trải nghiệm Hà Tĩnh.
-- Bảng màu:
-  - Xanh than: nội dung chính và CTA.
-  - Xanh rừng: section giới thiệu vùng đất.
-  - Cam san hô: accent, trạng thái và điểm nhấn.
-  - Nền trắng ngà: tạo cảm giác nhẹ, gần gũi với du lịch và thiên nhiên.
-- Typography:
-  - Heading: Lora, serif mềm và có chất editorial.
-  - Body: Plus Jakarta Sans, tròn, rõ và dễ đọc trên mobile.
-- Hệ thống hình dáng:
-  - Card và ảnh dùng bo góc đồng nhất.
-  - Button dạng pill.
-  - Bố cục có khoảng thở, không dồn quá nhiều thông tin.
-- Motion:
-  - Hover nhẹ trên card và button.
-  - Transition cho filter, modal và các trạng thái tương tác.
-  - Có hỗ trợ `prefers-reduced-motion`.
+- Không backend, database production, API, CMS, GPS hoặc bản đồ thật.
+- Không giả vờ có dữ liệu thời gian thực.
+- Tìm kiếm, lọc, bản đồ, chỉ đường và chia sẻ chỉ là mock interaction.
+- React/Vite chỉ là phương tiện dựng prototype có thể kiểm thử.
 
-## 3. Cấu trúc trang
+## 2. Nguyên tắc thiết kế bắt buộc
 
-### Header
+- Không xây một landing page gồm các section tĩnh và card sơ sài.
+- Mỗi nội dung quan trọng phải có trạng thái: mặc định, hover, selected, loading/mock, empty, error và mobile.
+- Mỗi mũi tên, nút và link hiển thị đều phải có hành vi; nếu chỉ trang trí thì không dùng hình thức giống nút.
+- Mỗi card phải trả lời được: đây là gì, ở đâu, phù hợp với ai, có gì đáng trải nghiệm và đi tiếp như thế nào.
+- Ảnh là nội dung chính, không phải nền trang trí. Không phủ lớp đen tùy tiện lên ảnh.
+- Không ép section cao bằng viewport khi nội dung không cần; full viewport chỉ là full chiều ngang.
+- Không tạo khoảng trống lớn bằng padding, `min-height` hoặc wrapper hẹp.
+- Không dùng text quá nhỏ để lấp khoảng trống; cỡ chữ phải phù hợp với khoảng cách và thiết bị.
+- Mọi flow phải có đường quay lại và trạng thái phản hồi sau khi click.
 
-- Wordmark `Sơn Trang / Explore`.
-- Điều hướng đến:
-  - Điểm đến.
-  - Hành trình.
-  - Sự kiện.
-- CTA `Về Sơn Trang`.
-
-### Hero
-
-- Tiêu đề chính: `Đi xa để gần hơn với một vùng đất.`
-- Mô tả ngắn về Hà Tĩnh.
-- CTA `Khám phá điểm đến`.
-- Link `Xem hành trình gợi ý`.
-- Ảnh hero sử dụng biển Thiên Cầm.
-
-### Giới thiệu Hà Tĩnh
-
-- Thông điệp về di sản, thiên nhiên, ẩm thực và lòng hiếu khách.
-- Section nền xanh rừng để tạo nhịp thị giác khác với hero.
-
-### Điểm đến nổi bật
-
-- Một điểm đến lớn dạng feature.
-- Các card điểm đến liên quan.
-- Mỗi card gồm:
-  - Ảnh.
-  - Tên điểm đến.
-  - Khu vực.
-  - Loại hình.
-  - Mô tả ngắn.
-  - Tương tác mở chi tiết.
-
-### Tìm kiếm và bộ lọc
-
-- Thanh tìm kiếm với placeholder:
-  - `Tìm kiếm điểm đến, sự kiện, địa danh...`
-- Bộ lọc mock:
-  - Tất cả.
-  - Biển.
-  - Lịch sử.
-  - Tâm linh.
-  - Sinh thái.
-- Hiển thị số lượng kết quả phù hợp.
-- Không kết nối dữ liệu hoặc tìm kiếm backend.
-
-### Danh mục và chủ đề
-
-- Văn hóa.
-- Sinh thái.
-- Ẩm thực.
-- Tâm linh.
-- Mỗi danh mục có mô tả ngắn và link về khu vực điểm đến.
-- Trên mobile chuyển thành danh sách dọc dễ đọc.
-
-### Hành trình gợi ý
-
-- Hà Tĩnh trong một ngày.
-- Theo dấu lịch sử.
-- Mùa xanh Hà Tĩnh.
-- Card hành trình gồm:
-  - Ảnh.
-  - Tên hành trình.
-  - Thời lượng.
-  - Số điểm dừng.
-  - Các điểm nổi bật.
-  - CTA `Xem hành trình`.
-
-### Sự kiện và nội dung theo mùa
-
-- Hai chế độ:
-  - Danh sách.
-  - Lịch.
-- Trạng thái sự kiện:
-  - Sắp diễn ra.
-  - Đang diễn ra.
-  - Đã kết thúc.
-- Calendar mock tháng 8/2026.
-- Click tab để chuyển giữa danh sách và lịch.
-
-### CTA Sơn Trang
-
-- Section chuyển tiếp riêng, không chỉ là banner phụ.
-- Nội dung:
-  - `Khám phá thêm`.
-  - `Sơn Trang`.
-  - Mô tả không gian, dịch vụ và hành trình.
-  - CTA `Khám phá Sơn Trang`.
-
-### Footer
-
-- Wordmark.
-- Mô tả ngắn.
-- Năm bản quyền.
-
-## 4. Luồng prototype
+## 3. Kiến trúc thông tin
 
 ```text
-Khám phá Hà Tĩnh
-        ↓
-Điểm đến / Tìm kiếm / Danh mục / Bản đồ mock
-        ↓
-Chi tiết điểm đến
-        ↓
-Hành trình / Sự kiện / Nội dung theo mùa
-        ↓
-Sơn Trang
+Trang khám phá Hà Tĩnh
+├── Điểm đến
+│   ├── Danh sách / tìm kiếm / lọc
+│   └── Chi tiết điểm đến
+├── Chủ đề và danh mục
+│   └── Trang kết quả theo chủ đề
+├── Bản đồ điểm đến 2D mock
+│   └── Marker → card tóm tắt → chi tiết
+├── Hành trình
+│   ├── Danh sách hành trình
+│   └── Chi tiết hành trình / timeline
+├── Sự kiện và theo mùa
+│   ├── Danh sách
+│   ├── Lịch
+│   └── Chi tiết sự kiện
+├── Chia sẻ / SEO / accessibility states
+└── Sơn Trang
+    ├── Landing Sơn Trang mock
+    ├── Dịch vụ mock
+    └── Hành trình Sơn Trang mock
 ```
 
-Các tương tác mock cần có:
+## 4. Danh sách màn hình cần thiết kế
 
-- Click card điểm đến → mở modal chi tiết.
-- Click filter → cập nhật danh sách card.
-- Nhập từ khóa → lọc mock theo tên, khu vực và loại hình.
-- Click hành trình → mở modal nội dung hành trình.
-- Chuyển `Danh sách / Lịch` → đổi view sự kiện.
-- Click `Chia sẻ` → mở popup Facebook, Zalo và sao chép liên kết.
-- Click CTA Sơn Trang → chuyển đến section Sơn Trang.
+### Nhóm A: Discovery homepage
 
-## 5. Mapping ảnh trong `public`
+1. Header desktop.
+2. Header mobile với menu mở/đóng.
+3. Hero Hà Tĩnh.
+4. Story band giới thiệu vùng đất.
+5. Điểm đến nổi bật dạng asymmetric feature grid.
+6. Chủ đề nổi bật dạng editorial list.
+7. Search/filter panel.
+8. Hành trình gợi ý dạng visual route cards.
+9. Sự kiện theo mùa với list/calendar switch.
+10. CTA Sơn Trang có hình ảnh và nội dung chuyển tiếp.
+11. Footer tối giản.
 
-| File | Sử dụng |
-| --- | --- |
-| `bien-thien-cam-hoang-hon.jpg` | Hero và hành trình biển |
-| `thien-cam-beach.jpg` | Ảnh biển Thiên Cầm bổ sung |
-| `nga-ba-dong-loc-tuong-dai.jpg` | Điểm đến lịch sử |
-| `nga-ba-dong-loc.jpg` | Ảnh Ngã ba Đồng Lộc bổ sung |
-| `chua-huong-tich-panorama.jpg` | Feature điểm đến tâm linh |
-| `chua-huong-tich.jpg` | Ảnh Chùa Hương Tích bổ sung |
-| `ho-sinh-thai-ha-tinh.jpg` | Điểm đến sinh thái |
-| `sinh-thai-thac-nuoc.jpg` | Hành trình thiên nhiên |
-| `hai-san-bien-ha-tinh.jpg` | Nội dung ẩm thực biển |
-| `am-thuc-dac-san-ha-tinh.jpg` | Nội dung đặc sản Hà Tĩnh |
-| `ha-tinh-scenery.jpg` | CTA Sơn Trang và cảnh quan tổng quát |
+### Nhóm B: Chi tiết điểm đến
 
-Nguồn ảnh đã tải được ghi trong [public/IMAGE_SOURCES.md](public/IMAGE_SOURCES.md).
+Mỗi điểm đến phải có một màn hình hoặc modal lớn đủ sâu:
 
-## 6. Responsive
+- Breadcrumb: Trang chủ / Điểm đến / Tên điểm đến.
+- Cover image và gallery tối thiểu 3 ảnh.
+- Tên, khu vực, chủ đề, trạng thái nội dung.
+- Mô tả mở đầu 2–3 câu.
+- Câu chuyện / giá trị văn hóa / điều đáng nhớ.
+- Thông tin nhanh: khu vực, thời lượng tham quan, nhóm phù hợp, mùa nên đi.
+- Trải nghiệm đề xuất.
+- Lưu ý tham quan.
+- Map placeholder với vị trí mock.
+- Điểm đến liên quan.
+- CTA `Xem trên bản đồ`, `Chia sẻ`, `Xem hành trình liên quan`.
+- State loading, empty gallery, thiếu thông tin và lỗi ảnh.
 
-### Quy tắc canvas toàn màn hình
+### Nhóm C: Danh mục và chủ đề
 
-- Toàn bộ prototype dùng full viewport ở desktop, iPad và điện thoại; không bọc nội dung trong một khung `max-width` chung làm phát sinh khoảng rỗng lớn hai bên.
-- Căn lề ngang dùng token `--gutter` trong `src/styles.css`, co giãn theo viewport và giảm còn `16px` trên mobile.
-- Section full-bleed dùng `width: 100vw`; nội dung bên trong vẫn bám cùng gutter chung để các phần thẳng hàng.
-- Chỉ giới hạn `max-width` cho đoạn văn, tiêu đề hoặc control cần dễ đọc; không giới hạn toàn bộ page shell.
-- Full màn hình được hiểu là phủ đủ chiều ngang, không phải ép mọi section cao bằng viewport. Các section nội dung dùng chiều cao theo nội dung; chỉ hero được phép giữ chiều cao lớn để tạo điểm nhấn.
-- Mọi lần redesign phải kiểm tra 3 mốc: phone `390px`, iPad `1024px`, desktop `1440px`; không được để layout thu hẹp thành cột giữa hoặc tạo vùng rỗng không có chủ đích.
+- Trang danh mục có hero chủ đề.
+- Mô tả chủ đề.
+- Bộ lọc phụ.
+- Số lượng kết quả.
+- Grid kết quả desktop.
+- Horizontal rail mobile.
+- Empty state khi chủ đề chưa có nội dung.
 
-### Desktop
+Danh mục chuẩn: Văn hóa, Sinh thái, Ẩm thực, Tâm linh, Biển, Lịch sử, Nghỉ dưỡng, Trải nghiệm.
 
-- Hero chia hai cột.
-- Navigation đầy đủ.
-- Bộ lọc hiển thị trên một hàng.
-- Grid điểm đến và hành trình có bố cục bất đối xứng.
+Chủ đề chuẩn: Cuối tuần, Gia đình, Có trẻ em, Người lớn tuổi, Check-in, Mùa hè, Mùa lễ hội, Khám phá chậm.
 
-### Tablet
+### Nhóm D: Tìm kiếm và bộ lọc
 
-- Hero chuyển thành layout dọc.
-- Grid card giảm số cột.
-- Bộ lọc vẫn giữ dạng chip có thể cuộn ngang.
+Bộ lọc bắt buộc theo requirement:
 
-### Mobile
+- Khu vực.
+- Chủ đề.
+- Thời gian / mùa.
+- Nhóm khách.
 
-- Navigation rút gọn.
-- Hero và ảnh xếp dọc.
-- Card điểm đến thành một cột.
-- Bộ lọc cuộn ngang, giữ vùng chạm đủ lớn.
-- Hành trình xếp dọc.
-- Modal chi tiết co theo chiều rộng màn hình.
+State phải có:
 
-## 7. Kiểm tra trước khi release
+- Chưa nhập.
+- Đang nhập.
+- Có gợi ý.
+- Có kết quả.
+- Nhiều bộ lọc đã chọn.
+- Không có kết quả.
+- Xóa từng filter.
+- Đặt lại toàn bộ.
+- Mobile bottom sheet.
 
-- Chạy `npm run build`.
-- Kiểm tra đường dẫn ảnh trong `public`.
-- Kiểm tra responsive desktop, tablet và mobile.
-- Kiểm tra filter, modal, tab lịch và popup chia sẻ.
-- Kiểm tra contrast CTA và trạng thái selected.
-- Kiểm tra trang production trả HTTP 200.
-- Kiểm tra ít nhất một asset ảnh production trả HTTP 200.
+### Nhóm E: Bản đồ 2D mock
 
-## 8. Triển khai Vercel
+- Bản đồ minh họa có lớp địa hình nhẹ, không giả làm bản đồ thật.
+- Marker theo chủ đề, có legend.
+- Marker mặc định, hover, selected và disabled.
+- Panel điểm đến bên desktop.
+- Bottom sheet điểm đến trên mobile.
+- Card marker gồm ảnh, tên, khu vực, tag và CTA.
+- `Xem chi tiết` dẫn đến detail screen.
+- `Chỉ đường` mở state external/mock route.
+- State bản đồ chưa tải, không có marker và filter không có kết quả.
 
-- Framework: Vite.
-- Build command: `vite build`.
-- Output directory: `dist`.
-- Project name: `ha-tinh-tour-explore-codex`.
-- Production URL:
-  - https://ha-tinh-tour-explore-codex.vercel.app
+### Nhóm F: Hành trình
 
-Trạng thái hiện tại: build production thành công, deployment Vercel ở trạng thái `READY`, trang và asset ảnh đã kiểm tra HTTP 200.
+Danh sách hành trình:
+
+- Ảnh cover.
+- Tên hành trình.
+- Thời lượng.
+- Số điểm dừng.
+- Nhóm khách.
+- Mức độ di chuyển.
+- Mùa phù hợp.
+- 3 điểm dừng nổi bật.
+
+Chi tiết hành trình:
+
+- Hero cover.
+- Tóm tắt thời lượng, số điểm, quãng đường mock.
+- Timeline theo giờ.
+- Mỗi stop có ảnh, mô tả, thời gian dự kiến và trải nghiệm.
+- Route map mock.
+- Lưu ý ăn uống, nghỉ ngơi, thời tiết.
+- CTA tới detail của từng điểm dừng.
+
+Mock route cần có: Hà Tĩnh 1 ngày, 2 ngày 1 đêm, Theo dấu lịch sử, Hành trình tâm linh, Cung biển Thiên Cầm, Mùa xanh Hà Tĩnh.
+
+### Nhóm G: Sự kiện và nội dung theo mùa
+
+List event:
+
+- Ảnh riêng.
+- Ngày, giờ, địa điểm.
+- Trạng thái: Sắp diễn ra, Đang diễn ra, Đã kết thúc.
+- Chủ đề.
+- Mô tả ngắn.
+- CTA xem chi tiết.
+
+Calendar:
+
+- Tháng hiện tại mock.
+- Ngày có event được đánh dấu bằng pattern + màu, không chỉ dùng màu.
+- Click ngày → danh sách event của ngày.
+- Không có event → empty state rõ ràng.
+
+Event detail:
+
+- Cover, status, lịch, địa điểm, nội dung, gallery, map placeholder và share.
+
+Season editorial:
+
+- Xuân: lễ hội và văn hóa.
+- Hạ: biển và nghỉ dưỡng.
+- Thu: thiên nhiên và khám phá chậm.
+- Mùa lễ hội: di sản và tâm linh.
+
+### Nhóm H: Sơn Trang
+
+Sơn Trang là luồng chuyển đổi chính, không phải banner cuối trang.
+
+- Landing Sơn Trang mock có hero, lợi thế, không gian, dịch vụ và CTA.
+- Mỗi điểm Hà Tĩnh liên quan có module `Đi tiếp cùng Sơn Trang`.
+- CTA phải nói rõ người dùng sẽ đi đâu sau khi click.
+- Có state chuyển tiếp và nút quay lại khám phá Hà Tĩnh.
+
+## 5. Mock data contract cho tương lai
+
+Prototype vẫn dùng mock data nhưng phải tổ chức như dữ liệu thật.
+
+### Destination
+
+```text
+id, slug, name, area, province, coordinates,
+categories[], themes[], audience[], seasons[],
+summary, story, experiences[], tips[],
+visitDuration, gallery[], coverImage, status,
+relatedDestinationIds[], relatedJourneyIds[],
+seoTitle, seoDescription, source, rights
+```
+
+### Journey
+
+```text
+id, slug, title, summary, coverImage,
+duration, stopCount, audience[], seasons[], difficulty,
+stops[{order, destinationId, time, duration, note, experience}],
+routeGeometryMock, tips[], status
+```
+
+### Event
+
+```text
+id, slug, title, summary, description,
+startAt, endAt, venue, area, status,
+categories[], coverImage, gallery[],
+destinationId, source, rights
+```
+
+### Category / Theme / Season / Audience
+
+Mỗi taxonomy có `id`, `slug`, `label`, `description`, `image`, `sortOrder`, `status` để sau này nối CMS và API không phải đổi UI contract.
+
+## 6. Visual system
+
+### Art direction
+
+Coastal field journal: ảnh đời thật, nền sáng, typography editorial, nhịp layout bất đối xứng nhẹ, chi tiết địa phương vừa đủ. Không dùng gradient AI, không phủ tối toàn ảnh, không dùng quá nhiều pill/card giống nhau.
+
+### Color tokens
+
+- `--color-ink`: xanh đá biển cho chữ và CTA.
+- `--color-forest`: xanh tràm cho story và journey.
+- `--color-shell`: nền vỏ sò ấm.
+- `--color-mist`: nền xanh sương cho search/filter.
+- `--color-clay`: đất nung cho accent, link và trạng thái.
+- `--color-sun`: vàng nắng cho emphasis trên nền tối.
+- `--color-paper`: nền card sáng.
+
+Chỉ dùng một accent chính trong từng context. Contrast phải được kiểm tra trên nền ảnh, nền sáng và nền tối.
+
+### Typography
+
+- Display: serif có cá tính, tối đa 2–3 dòng.
+- Body: sans rõ, 16px desktop, tối thiểu 15px mobile.
+- Label: 12–13px, không dùng label quá nhỏ để lấp layout.
+- Text column tối đa khoảng 60–70 ký tự mỗi dòng.
+- Không dùng tracking âm quá mạnh làm chữ dính.
+
+### Shape and surface
+
+- Radius lớn cho image feature, radius vừa cho card, radius nhỏ cho control.
+- Shadow nhẹ có tint xanh, không dùng bóng đen nặng.
+- Ảnh có crop có chủ đích, aspect ratio được định nghĩa theo component.
+- Không dùng border dày ở mọi component.
+
+## 7. Responsive contract
+
+### Desktop 1440px
+
+- Full-width canvas, gutter khoảng 32–52px.
+- Hero 2 cột: copy + visual.
+- Feature grid bất đối xứng.
+- Journey route grid 1 lớn + 2 nhỏ.
+- Map có panel bên phải.
+- Header một dòng.
+
+### iPad 1024px
+
+- Gutter 24–32px.
+- Hero vẫn ưu tiên hình ảnh nhưng copy không bị ép.
+- Feature chuyển thành 1 feature + grid 2 cột.
+- Map dùng map + bottom panel.
+- Filter có thể cuộn ngang.
+
+### Phone 390px
+
+- Gutter 16px.
+- Hero xếp dọc, ảnh có tỷ lệ rõ.
+- Card nội dung theo chiều dọc hoặc horizontal rail khi phù hợp.
+- Menu mở thành panel rõ ràng, không đè nội dung.
+- Bộ lọc dùng bottom sheet.
+- Detail/event/journey dùng full-screen sheet hoặc page mock.
+- Tap target tối thiểu 44px.
+- Không để chữ, CTA hoặc icon bị cắt.
+
+## 8. Motion và interaction
+
+Motion intensity: 5/10, dùng để tạo hierarchy chứ không làm trang phô diễn.
+
+- Hero copy reveal một lần.
+- Ảnh feature scale rất nhẹ khi hover.
+- Card hover nâng 2–4px và đổi accent.
+- Filter chuyển trạng thái rõ bằng background + label.
+- Modal/sheet có enter/exit bằng opacity + transform.
+- Timeline route reveal theo từng stop.
+- Không dùng animation cho nội dung mới render nếu observer không đăng ký lại.
+- `prefers-reduced-motion` tắt transform/transition không cần thiết.
+
+## 9. Accessibility và content quality
+
+- Alt text mô tả đúng nội dung ảnh.
+- Heading hierarchy không nhảy cấp.
+- Focus ring rõ.
+- Không biểu thị selected/error chỉ bằng màu.
+- Button và link có label cụ thể.
+- Empty/error state có hướng xử lý.
+- Nội dung mock phải đủ dài để test wrap và responsive, không dùng câu placeholder ngắn.
+- Tên, địa điểm, mùa, nhóm khách và thời lượng phải thống nhất giữa card, detail và journey.
+
+## 10. Lộ trình thực hiện
+
+### Phase 0: Content and data foundation
+
+- Chốt taxonomy.
+- Chuẩn hóa mock data contract.
+- Kiểm tra nguồn và quyền dùng ảnh.
+- Viết nội dung mẫu cho 7 điểm đến, 6 hành trình, 6 sự kiện, 4 mùa.
+
+### Phase 1: UX architecture
+
+- Wireflow toàn bộ 8 chức năng.
+- Xác định page, modal, sheet, state và back navigation.
+- Chốt desktop/iPad/mobile frames.
+
+### Phase 2: Visual design
+
+- Moodboard Hà Tĩnh.
+- Color, typography, spacing, radius, icon và image treatment.
+- Component states và content rules.
+
+### Phase 3: Prototype implementation
+
+- Dựng homepage hoàn chỉnh.
+- Dựng detail destination.
+- Dựng search/filter states.
+- Dựng map mock.
+- Dựng journey detail.
+- Dựng event list/calendar/detail.
+- Dựng Sơn Trang transition.
+
+### Phase 4: Validation
+
+- Test tất cả link, button, arrow, modal, sheet, filter và tab.
+- Test 390px, 1024px, 1440px.
+- Test keyboard, focus, reduced motion, contrast, text wrap.
+- Test empty, error và content dài.
+
+### Phase 5: FE/BE/DB handoff
+
+- Component inventory.
+- Token export.
+- Screen-state matrix.
+- Mock data JSON bám schema.
+- API mapping cho destination, journey, event, category, search và map.
+- Xác định field bắt buộc, field tùy chọn, quyền nội dung và trạng thái publish.
+
+## 11. Acceptance criteria trước khi gọi là hoàn chỉnh
+
+- Có đủ 8 chức năng trong requirement, không chỉ có homepage.
+- Có ít nhất một flow hoàn chỉnh từ discovery → detail → journey/event → Sơn Trang.
+- Detail destination có nội dung sâu, gallery, info, map và related content.
+- Journey có timeline và điểm dừng thật trong mock data.
+- Event có list, calendar, detail và status.
+- Map có marker, selected state, card và navigation.
+- Search/filter có đủ success, empty, reset và mobile sheet.
+- Không có icon/link nào bấm không có phản hồi.
+- Không có ảnh placeholder hoặc section trống không có mục đích.
+- Typography đọc được trên cả ba breakpoint.
+- Không có padding hoặc min-height tạo khoảng trống vô nghĩa.
+- `npm test`, `npm run build`, `git diff --check` đạt.
+- Prototype live được kiểm tra bằng browser thật, không chỉ suy luận từ build.
+
+## 12. Kết luận
+
+Lần triển khai tiếp theo chỉ bắt đầu sau khi kế hoạch này được duyệt. Thứ tự ưu tiên là: nội dung và dữ liệu → flow → screen states → visual system → prototype → validation. Không quay lại cách làm chỉ dựng hero, card và vài section tĩnh rồi gọi là hoàn chỉnh.
