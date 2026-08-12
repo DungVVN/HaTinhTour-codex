@@ -29,5 +29,5 @@ Ha Tinh Tour is a Vietnamese travel discovery prototype, designed in the spirit 
 
 ## Deployment
 
-- Vercel project: `ha-tinh-tour-explore`.
-- Production URL: https://ha-tinh-tour-explore.vercel.app
+- Vercel project: `ha-tinh-tour-explore-codex`.
+- Production URL: https://ha-tinh-tour-explore-codex.vercel.app

@@ -208,8 +208,8 @@ Nguồn ảnh đã tải được ghi trong [public/IMAGE_SOURCES.md](public/IMA
 - Framework: Vite.
 - Build command: `vite build`.
 - Output directory: `dist`.
-- Project name: `ha-tinh-tour-explore`.
+- Project name: `ha-tinh-tour-explore-codex`.
 - Production URL:
-  - https://ha-tinh-tour-explore.vercel.app
+  - https://ha-tinh-tour-explore-codex.vercel.app
 
 Trạng thái hiện tại: build production thành công, deployment Vercel ở trạng thái `READY`, trang và asset ảnh đã kiểm tra HTTP 200.
