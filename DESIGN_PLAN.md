@@ -171,6 +171,14 @@ Nguồn ảnh đã tải được ghi trong [public/IMAGE_SOURCES.md](public/IMA
 
 ## 6. Responsive
 
+### Quy tắc canvas toàn màn hình
+
+- Toàn bộ prototype dùng full viewport ở desktop, iPad và điện thoại; không bọc nội dung trong một khung `max-width` chung làm phát sinh khoảng rỗng lớn hai bên.
+- Căn lề ngang dùng token `--layout-gutter` trong `src/spacing.css`: desktop `20–44px`, iPad `24–32px`, mobile `16px`.
+- Section full-bleed dùng `width: 100vw`; nội dung bên trong vẫn bám cùng gutter chung để các phần thẳng hàng.
+- Chỉ giới hạn `max-width` cho đoạn văn, tiêu đề hoặc control cần dễ đọc; không giới hạn toàn bộ page shell.
+- Mọi lần redesign phải kiểm tra 3 mốc: phone `390px`, iPad `1024px`, desktop `1440px`; không được để layout thu hẹp thành cột giữa hoặc tạo vùng rỗng không có chủ đích.
+
 ### Desktop
 
 - Hero chia hai cột.

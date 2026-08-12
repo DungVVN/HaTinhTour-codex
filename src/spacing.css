@@ -20,6 +20,16 @@
   --space-grid: clamp(16px, 2vw, 28px);
   --space-card: clamp(16px, 2vw, 24px);
   --space-control: 12px;
+
+  /* Full-viewport layout contract: content uses the canvas, not a narrow max-width column. */
+  --layout-gutter: clamp(20px, 2.6vw, 44px);
+}
+
+/* Shared horizontal rhythm. Every primary section must align to this gutter. */
+.page-gutter,
+.section-pad {
+  padding-left: var(--layout-gutter) !important;
+  padding-right: var(--layout-gutter) !important;
 }
 
 /* Global rhythm */
@@ -44,6 +54,7 @@ main { overflow: clip; }
 
 /* iPad/tablet: preserve breathing room without wasting vertical space */
 @media (min-width: 768px) and (max-width: 991px) {
+  :root { --layout-gutter: clamp(24px, 3.2vw, 32px); }
   .section-pad { padding-block: 72px; }
   .hero { padding-block: 64px 88px; }
   .destination-layout { gap: 20px; }
@@ -55,7 +66,8 @@ main { overflow: clip; }
 
 /* Phone: one predictable vertical rhythm and no content behind fixed UI */
 @media (max-width: 767px) {
-  .section-pad { padding: var(--space-section-mobile) 18px; }
+  :root { --layout-gutter: 16px; }
+  .section-pad { padding: var(--space-section-mobile) var(--layout-gutter); }
   .hero { padding-top: 48px; padding-bottom: 72px; gap: var(--space-9); }
   .hero h1 { margin-bottom: var(--space-6); }
   .hero-intro { margin-bottom: var(--space-7); }
