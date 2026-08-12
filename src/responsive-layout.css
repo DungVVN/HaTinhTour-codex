@@ -1,0 +1,50 @@
+/* Desktop: use the full canvas while preserving readable content gutters. */
+@media (min-width: 1200px) {
+  .hero { min-height: calc(100svh - 82px); }
+  .destinations-section { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .search-section { min-height: 52svh; display: flex; flex-direction: column; justify-content: center; }
+  .category-section { min-height: 70svh; }
+  .journey-section { min-height: 92svh; display: flex; flex-direction: column; justify-content: center; }
+  .events-section { min-height: 62svh; }
+  .son-trang { min-height: 68svh; }
+}
+
+/* iPad/tablet: a real two-column canvas, not a squeezed desktop or a tall phone stack. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .topbar { height: 72px; }
+  .page-gutter { padding-left: 40px !important; padding-right: 40px !important; }
+  .section-pad { padding-left: 40px; padding-right: 40px; padding-block: 76px; }
+  .hero { min-height: calc(100svh - 72px); grid-template-columns: .92fr 1.08fr; gap: 28px; padding-block: 52px 64px; }
+  .hero h1 { font-size: clamp(48px, 6.4vw, 76px); }
+  .hero-visual { height: calc(100svh - 170px); min-height: 470px; }
+  .intro-strip { grid-template-columns: .8fr 1.2fr; gap: 42px; min-height: 50svh; align-items: center; }
+  .intro-strip h2 { font-size: clamp(42px, 5.2vw, 66px); }
+  .destination-layout { grid-template-columns: .84fr 1.16fr; gap: 20px; }
+  .destination-feature { min-height: 570px; }
+  .destination-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .destination-card img { height: 185px; }
+  .search-section { min-height: 54svh; display: flex; flex-direction: column; justify-content: center; }
+  .search-controls { flex-direction: column; align-items: stretch; }
+  .filter-row { justify-content: flex-start; }
+  .category-section { min-height: 68svh; }
+  .journey-section { min-height: 86svh; display: flex; flex-direction: column; justify-content: center; }
+  .journey-grid { grid-template-columns: 1.1fr .9fr; grid-template-rows: 250px 250px; }
+  .events-section { min-height: 58svh; }
+  .son-trang { grid-template-columns: 1fr 1fr; min-height: 58svh; }
+  .son-image { min-height: 480px; }
+  .son-copy { padding: 64px 40px; }
+  .mobile-nav { display: none; }
+}
+
+/* Phone: every section fills the available width and keeps one clear reading column. */
+@media (max-width: 767px) {
+  .full-bleed { width: 100vw; }
+  .hero { width: 100vw; }
+  .intro-strip, .journey-section, .events-section, .search-section { width: 100vw; }
+  .destination-grid { width: 100%; }
+  .destination-card { min-width: 0; }
+  .journey-section { min-height: auto; }
+  .journey-grid { width: 100%; }
+  .events-section { min-height: 55svh; }
+  .son-trang { min-height: auto; }
+}
