@@ -1,10 +1,19 @@
 @media (max-width: 767px) {
-  body { padding-bottom: calc(66px + env(safe-area-inset-bottom)); }
+  /* Keep navigation in the page flow so it never covers hero imagery or cards. */
+  body { padding-bottom: 0; }
   .mobile-nav {
-    height: calc(66px + env(safe-area-inset-bottom));
-    padding-bottom: env(safe-area-inset-bottom);
-    box-shadow: 0 -8px 24px rgba(19, 33, 30, .08);
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: 54px;
+    padding-bottom: 0;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 6px 18px rgba(19, 33, 30, .08);
+    z-index: 1;
   }
-  .mobile-nav a { height: 66px; }
+  .mobile-nav a { height: 54px; }
   .footer { padding-bottom: 24px; }
 }
