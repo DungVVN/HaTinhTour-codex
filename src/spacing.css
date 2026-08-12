@@ -1,0 +1,79 @@
+:root {
+  /* Primitive spacing scale: 4px base unit */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 48px;
+  --space-11: 64px;
+  --space-12: 80px;
+
+  /* Semantic spacing */
+  --space-section: clamp(64px, 8vw, 128px);
+  --space-section-mobile: 56px;
+  --space-content: clamp(24px, 4vw, 56px);
+  --space-grid: clamp(16px, 2vw, 28px);
+  --space-card: clamp(16px, 2vw, 24px);
+  --space-control: 12px;
+}
+
+/* Global rhythm */
+main { overflow: clip; }
+.section-pad { padding-block: var(--space-section); }
+.section-heading, .search-header { margin-bottom: var(--space-content); }
+.section-heading h2, .search-header h2 { max-width: 14ch; }
+.section-heading > *, .search-header > * { min-width: 0; }
+.destination-layout, .destination-grid, .journey-grid { gap: var(--space-grid); }
+.destination-grid { row-gap: var(--space-grid); }
+.destination-card .card-body { min-height: 190px; padding: var(--space-card); }
+.destination-card .card-body p { margin-bottom: var(--space-6); }
+.category-list { margin-top: var(--space-5); }
+.category-row { min-height: 76px; padding-block: var(--space-6); }
+.journey-heading { margin-bottom: var(--space-content); }
+.journey-overlay { padding: var(--space-card); }
+.event-list article { min-height: 104px; padding-block: var(--space-6); }
+.son-copy { gap: var(--space-2); }
+.son-copy p:not(.eyebrow) { margin-bottom: var(--space-7); }
+.footer { row-gap: var(--space-4); }
+.modal-image { display: block; margin-bottom: var(--space-4); }
+
+/* iPad/tablet: preserve breathing room without wasting vertical space */
+@media (min-width: 768px) and (max-width: 991px) {
+  .section-pad { padding-block: 72px; }
+  .hero { padding-block: 64px 88px; }
+  .destination-layout { gap: 20px; }
+  .destination-grid { row-gap: 20px; }
+  .destination-card .card-body { min-height: 205px; }
+  .journey-grid { gap: 16px; }
+  .event-list article { min-height: 96px; }
+}
+
+/* Phone: one predictable vertical rhythm and no content behind fixed UI */
+@media (max-width: 767px) {
+  .section-pad { padding: var(--space-section-mobile) 18px; }
+  .hero { padding-top: 48px; padding-bottom: 72px; gap: var(--space-9); }
+  .hero h1 { margin-bottom: var(--space-6); }
+  .hero-intro { margin-bottom: var(--space-7); }
+  .hero-actions { row-gap: var(--space-5); }
+  .section-heading, .search-header { margin-bottom: var(--space-8); }
+  .section-heading h2, .search-header h2 { max-width: none; }
+  .destination-layout { gap: var(--space-6); }
+  .destination-grid { gap: var(--space-5); }
+  .destination-card .card-body { min-height: 0; padding: var(--space-5); }
+  .category-list { margin-top: var(--space-2); }
+  .category-row { min-height: 64px; padding-block: 18px; }
+  .journey-heading { margin-bottom: var(--space-8); }
+  .journey-grid { gap: var(--space-5); }
+  .journey-overlay { padding: var(--space-5); }
+  .event-list article { min-height: 98px; padding-block: 20px; }
+  .son-copy { padding-block: var(--space-11); }
+  .footer { padding-top: var(--space-8); }
+  .detail-modal-bootstrap .modal-header { padding: var(--space-6); }
+  .detail-modal-bootstrap .modal-body { padding: 0 var(--space-6) var(--space-6); }
+  .detail-modal-bootstrap .modal-footer { padding: 0 var(--space-6) var(--space-6); gap: var(--space-3); }
+}
